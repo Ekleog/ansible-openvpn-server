@@ -42,6 +42,8 @@ Tags
 
 * `openvpn-server-pkgs`: Installs required packages
 
+* `openvpn-server-user`: Add asked user and group if needed
+
 * `openvpn-server-genkeys`: Generates CA and server keys
 
 Example Playbook

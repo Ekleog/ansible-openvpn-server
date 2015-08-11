@@ -16,11 +16,14 @@
 ---
 
 tasks:
-  - include: install-packages.yml
-    tags: openvpn-server-pkgs
+  - name: "create user"
+    user:
+        name: "{{openvpn_server_user}}"
+        shell: "/bin/false"
+        system: "yes"
+        state: "present"
 
-  - include: setup-user.yml
-    tags: openvpn-server-user
-
-  - include: generate-keys.yml
-    tags: openvpn-server-genkeys
+  - name: "create group"
+    group:
+        name: "{{openvpn_server_group}}"
+        state: "present"
