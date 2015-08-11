@@ -16,10 +16,8 @@
 ---
 
 tasks:
-  - include: install-packages.yml
-    tags: openvpn-server-pkgs
+  - name: install openssl
+    portage: pkg=dev-libs/openssl
 
-# TODO: Ensure presence of user / group
-
-  - include: generate-keys.yml
-    tags: openvpn-server-genkeys
+  - name: install openvpn
+    portage: pkg=net-misc/openvpn
