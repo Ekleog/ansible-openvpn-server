@@ -1,19 +1,28 @@
 openvpn-server
 ==============
 
-This role aims to provide an easy-to-use (yet flexible) OpenVPN server
-configuration.
+This role aims to provide an easy-to-use (yet flexible) OpenVPN server configuration.
+
+It is designed to work together with openvpn-client ; this way it can generate every private key on the right computer and never move them around, which is better for security reasons.
 
 Requirements
 ------------
 
-At the moment, only portage is supported. Adding support for other package
-managers should be trivial, though.
+At the moment, only portage is supported. Adding support for other package managers should be trivial, though.
 
 Role Variables
 --------------
 
-* `openvpn_server_home`: Configures the directory in which to place configuration files.
+* `openvpn_server_proto`: Protocol to use
+Default: udp
+
+* `openvpn_server_port`: Port to which the server should bind
+Default: 1194
+
+* `openvpn_server_dev`: Device to create, or use if it already exists. Please note at the moment it supports only TAP-based VPNs
+Default: tun
+
+* `openvpn_server_home`: Directory in which to place configuration files
 Default: /etc/openvpn
 
 * `openvpn_server_user`: User to run OpenVPN with (will be created if non-existent)
@@ -45,6 +54,8 @@ Tags
 * `openvpn-server-user`: Add asked user and group if needed
 
 * `openvpn-server-genkeys`: Generates CA and server keys
+
+* `openvpn-server-config`: Configures OpenVPN server
 
 Example Playbook
 ----------------

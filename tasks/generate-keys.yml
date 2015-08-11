@@ -18,8 +18,8 @@
 tasks:
   - name: "secure pki directory"
     file:
-        owner: "{{openvpn_server_user}}"
-        group: "{{openvpn_server_group}}"
+        owner: "root"
+        group: "root"
         mode: 700
         path: "{{openvpn_server_home}}/pki"
         state: "directory"

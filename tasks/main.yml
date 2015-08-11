@@ -24,3 +24,6 @@ tasks:
 
   - include: generate-keys.yml
     tags: openvpn-server-genkeys
+
+  - include: configure.yml
+    tags: openvpn-server-config

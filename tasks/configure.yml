@@ -15,5 +15,10 @@
 # along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-  - name: "restart openvpn-server"
-    service: 
+tasks:
+  - name: "create configuration file"
+    template:
+        src: "openvpn.conf.j2"
+        dest: "{{openvpn_server_home}}/openvpn.conf"
+        owned: root
+        group: root
