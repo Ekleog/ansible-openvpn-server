@@ -19,5 +19,5 @@
   template:
       src: "openvpn.conf.j2"
       dest: "{{openvpn_server_home}}/openvpn.conf"
-      owned: root
+      owner: root
       group: root
