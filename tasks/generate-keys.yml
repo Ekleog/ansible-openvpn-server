@@ -55,6 +55,12 @@
       chdir: "{{openvpn_server_home}}/pki"
       creates: "private/{{inventory_hostname}}.key"
 
+- name: "generate serial file"
+  shell: "/bin/echo 02 > ca.srl"
+  args:
+      chdir: "{{openvpn_server_home}}/pki"
+      creates: "ca.srl"
+
 - name: "sign server key"
   command: "/usr/bin/openssl x509 -req -in {{inventory_hostname}}-csr.pem -out {{inventory_hostname}}.crt -CA ca.crt -CAkey private/ca.key"
   args:
