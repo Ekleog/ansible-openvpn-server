@@ -15,12 +15,11 @@
 # along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-tasks:
-  - name: install coreutils
-    portage: pkg=sys-apps/coreutils
+- name: install coreutils
+  portage: pkg=sys-apps/coreutils
 
-  - name: install openssl
-    portage: pkg=dev-libs/openssl
+- name: install openssl
+  portage: pkg=dev-libs/openssl
 
-  - name: install openvpn
-    portage: pkg=net-misc/openvpn
+- name: install openvpn
+  portage: pkg=net-misc/openvpn

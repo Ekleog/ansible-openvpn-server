@@ -15,15 +15,14 @@
 # along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-tasks:
-  - include: install-packages.yml
-    tags: openvpn-server-pkgs
+- include: install-packages.yml
+  tags: openvpn-server-pkgs
 
-  - include: setup-user.yml
-    tags: openvpn-server-user
+- include: setup-user.yml
+  tags: openvpn-server-user
 
-  - include: generate-keys.yml
-    tags: openvpn-server-genkeys
+- include: generate-keys.yml
+  tags: openvpn-server-genkeys
 
-  - include: configure.yml
-    tags: openvpn-server-config
+- include: configure.yml
+  tags: openvpn-server-config

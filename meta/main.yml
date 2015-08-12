@@ -20,9 +20,10 @@ galaxy_info:
     description: Easy-to-use OpenVPN server configuration
     license: CPLv3
     min_ansible_version: 1.2
+    platforms:
       - name: GenericLinux
-          versions:
-      - all
+        versions:
+          - all
     categories:
       - networking
 dependencies: []

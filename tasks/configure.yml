@@ -15,10 +15,9 @@
 # along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-tasks:
-  - name: "create configuration file"
-    template:
-        src: "openvpn.conf.j2"
-        dest: "{{openvpn_server_home}}/openvpn.conf"
-        owned: root
-        group: root
+- name: "create configuration file"
+  template:
+      src: "openvpn.conf.j2"
+      dest: "{{openvpn_server_home}}/openvpn.conf"
+      owned: root
+      group: root
