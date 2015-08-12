@@ -15,14 +15,16 @@
 # along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-- name: "create user"
-  user:
-      name: "{{openvpn_server_user}}"
-      shell: "/bin/false"
-      system: "yes"
-      state: "present"
-
 - name: "create group"
   group:
       name: "{{openvpn_server_group}}"
       state: "present"
+      system: "yes"
+
+- name: "create user"
+  user:
+      name: "{{openvpn_server_user}}"
+      state: "present"
+      system: "yes"
+      shell: "/bin/false"
+      group: "{{openvpn_server_group}}"
