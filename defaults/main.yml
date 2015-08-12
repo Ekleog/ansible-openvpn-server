@@ -17,7 +17,7 @@
 
 openvpn_server_proto: "udp"
 openvpn_server_port: 1194
-openvpn_server_dev_type: "tap"
+openvpn_server_dev: "tap"
 openvpn_server_home: "/etc/openvpn"
 openvpn_server_user: "openvpn"
 openvpn_server_group: "openvpn"
