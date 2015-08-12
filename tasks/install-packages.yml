@@ -16,10 +16,10 @@
 ---
 
 - name: install coreutils
-  portage: pkg=sys-apps/coreutils
+  portage: package=sys-apps/coreutils state=present
 
 - name: install openssl
-  portage: pkg=dev-libs/openssl
+  portage: package=dev-libs/openssl state=present
 
 - name: install openvpn
-  portage: pkg=net-misc/openvpn
+  portage: package=net-misc/openvpn state=present
