@@ -15,11 +15,11 @@
 # along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
 ---
 
-- name: "secure pki directory"
+- name: "create pki directory"
   file:
       owner: "root"
       group: "root"
-      mode: 700
+      mode: 0755
       path: "{{openvpn_server_home}}/pki"
       state: "directory"
 
@@ -27,7 +27,7 @@
   file:
       owner: "root"
       group: "root"
-      mode: 700
+      mode: 0700
       path: "{{openvpn_server_home}}/pki/private"
       state: "directory"
 
@@ -47,13 +47,13 @@
   file: "path={{openvpn_server_home}}/pki/ca-csr.pem state=absent"
 
 - name: "protect ca key"
-  file: "path={{openvpn_server_home}}/pki/private/ca.key mode=400"
+  file: "path={{openvpn_server_home}}/pki/private/ca.key mode=0400"
 
 - name: "generate server key"
-  command: "/usr/bin/openssl req -nodes -newkey {{openvpn_server_key_gen}} -keyout {{inventory_hostname}}.key -out {{inventory_hostname}}-csr.pem -subj '/CN={{openvpn_server_key_cn}}/'"
+  command: "/usr/bin/openssl req -nodes -newkey {{openvpn_server_key_gen}} -keyout private/{{inventory_hostname}}.key -out {{inventory_hostname}}-csr.pem -subj '/CN={{openvpn_server_key_cn}}/'"
   args:
       chdir: "{{openvpn_server_home}}/pki"
-      creates: "{{inventory_hostname}}.key"
+      creates: "private/{{inventory_hostname}}.key"
 
 - name: "sign server key"
   command: "/usr/bin/openssl x509 -req -in {{inventory_hostname}}-csr.pem -out {{inventory_hostname}}.crt -CA ca.crt -CAkey private/ca.key"
