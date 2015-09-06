@@ -73,7 +73,7 @@
 - name: "generate tls auth key"
   command: "/usr/sbin/openvpn --genkey --secret ta.key"
   args:
-      chdir: "{{openvpn_server_home}}"
+      chdir: "{{openvpn_server_home}}/pki/private"
       creates: "ta.key"
 
 - name: "generate diffie-hellman parameters"
