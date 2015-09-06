@@ -3,7 +3,7 @@ openvpn-server
 
 This role aims to provide an easy-to-use (yet flexible) OpenVPN server configuration.
 
-It is designed to work together with openvpn-client ; this way it can generate every private key on the right computer and never move them around, which is better for security reasons.
+It is designed to work together with openvpn-client ; this way it can efficiently handle configuration.
 
 Requirements
 ------------
@@ -37,6 +37,12 @@ Default: OpenVPN-CA
 * `openvpn_server_key_cn`: CN of the OpenVPN server key
 Default: OpenVPN-server
 
+* `openvpn_server_client_cn_prefix`: CN prefix of OpenVPN client keys
+Default: OpenVPN-client-
+
+* `openvpn_server_client_list`: List of clients for which certificates should be generated
+Default: {{ groups['vpnclients'] }}
+
 * `openvpn_server_ca_gen`: Configures the way of generating the CA key
 Default: rsa:3072
 
@@ -56,6 +62,8 @@ Tags
 * `openvpn-server-genkeys`: Generates CA and server keys
 
 * `openvpn-server-config`: Configures OpenVPN server
+
+* `openvpn-server-genuserkeys`: Generates client keys and configuration files
 
 Example Playbook
 ----------------

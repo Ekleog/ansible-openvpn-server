@@ -1,0 +1,75 @@
+# This file is part of ansible-openvpn-server.
+# Copyright (C) 2015 Leo Gaspard
+#
+# ansible-openvpn-server is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# ansible-openvpn-server is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with ansible-openvpn-server.  If not, see <http://www.gnu.org/licenses/>.
+---
+
+- name: "generate client keys"
+  command: "/usr/bin/openssl req -nodes -newkey {{openvpn_server_key_gen}} -keyout private/{{item}}.key -out {{item}}-csr.pem -subj '/CN={{openvpn_server_client_cn_prefix}}{{item}}/'"
+  args:
+      chdir: "{{openvpn_server_home}}/pki"
+      creates: "private/{{item}}.key"
+  with_items: "{{ openvpn_server_client_list }}"
+
+- name: "sign client keys"
+  command: "/usr/bin/openssl x509 -req -in {{item}}-csr.pem -out {{item}}.crt -CA ca.crt -CAkey private/ca.key"
+  args:
+      chdir: "{{openvpn_server_home}}/pki"
+      creates: "{{item}}.crt"
+  with_items: "{{ openvpn_server_client_list }}"
+
+- name: "remove temporary client certification signing requests"
+  file: "path={{openvpn_server_home}}/pki/{{item}}-csr.pem state=absent"
+  with_items: "{{ openvpn_server_client_list }}"
+
+- name: "secure client directory"
+  file:
+      owner: "root"
+      group: "root"
+      mode: 0700
+      path: "{{openvpn_server_home}}/pki/client"
+      state: "directory"
+
+- name: "read ca cert"
+  command: "/bin/cat {{openvpn_server_home}}/pki/ca.crt"
+  register: ca_crt
+  changed_when: false
+
+- name: "read client keys"
+  command: "/bin/cat {{openvpn_server_home}}/pki/{{item}}.crt"
+  with_items: "{{ openvpn_server_client_list }}"
+  register: client_crt
+  changed_when: false
+
+- name: "read client private keys"
+  command: "/bin/cat {{openvpn_server_home}}/pki/private/{{item}}.key"
+  with_items: "{{ openvpn_server_client_list }}"
+  register: client_priv
+  changed_when: false
+
+- name: "read trust anchor"
+  command: "/bin/cat {{openvpn_server_home}}/pki/private/ta.key"
+  register: ta_priv
+  changed_when: false
+
+- name: "generate client configuration files"
+  template:
+      src: "client.ovpn.j2"
+      dest: "{{openvpn_server_home}}/pki/client/{{ansible_hostname}}-{{openvpn_server_dev}}-{{item.0}}.ovpn"
+      owner: root
+      group: root
+  with_together:
+      - "{{ openvpn_server_client_list }}"
+      - "{{ client_crt.results }}"
+      - "{{ client_priv.results }}"

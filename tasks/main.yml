@@ -26,3 +26,6 @@
 
 - include: configure.yml
   tags: openvpn-server-config
+
+- include: generate-user-keys.yml
+  tags: openvpn-server-genuserkeys
