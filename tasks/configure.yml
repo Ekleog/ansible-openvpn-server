@@ -17,7 +17,7 @@
 
 - name: "create configuration file"
   template:
-      src: "openvpn.conf.j2"
+      src: "server.conf.j2"
       dest: "{{openvpn_server_home}}/openvpn.conf"
       owner: root
       group: root
