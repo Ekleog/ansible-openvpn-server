@@ -5,11 +5,11 @@ port {{ openvpn_server_port }}
 dev {{ openvpn_server_dev }}
 dev-type {{ openvpn_server_dev_type }}
 
-ca pki/ca.crt
-cert pki/{{ inventory_hostname }}.crt
-key pki/private/{{ inventory_hostname }}.key
-dh dh.pem
-tls-auth pki/private/ta.key 0
+ca {{ openvpn_server_home }}/pki/ca.crt
+cert {{ openvpn_server_home }}/pki/{{ inventory_hostname }}.crt
+key {{ openvpn_server_home }}/pki/private/{{ inventory_hostname }}.key
+dh {{ openvpn_server_home }}/dh.pem
+tls-auth {{ openvpn_server_home }}/pki/private/ta.key 0
 
 user {{ openvpn_server_user }}
 group {{ openvpn_server_group }}
@@ -23,5 +23,5 @@ comp-lzo
 persist-key
 persist-tun
 
-status openvpn-status.log
+status {{ openvpn_server_home }}/openvpn-status.log
 mute 20
