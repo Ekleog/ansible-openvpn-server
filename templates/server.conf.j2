@@ -3,6 +3,7 @@
 proto {{ "tcp-server" if openvpn_server_proto == "tcp" else "udp" }}
 port {{ openvpn_server_port }}
 dev {{ openvpn_server_dev }}
+dev-type {{ openvpn_server_dev_type }}
 
 ca pki/ca.crt
 cert pki/{{ inventory_hostname }}.crt
