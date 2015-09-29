@@ -20,7 +20,7 @@ Default: udp
 Default: 1194
 
 * `openvpn_server_dev`: Device to create, or use if it already exists. Please note at the moment it supports only TAP-based VPNs
-Default: tun
+Default: tap
 
 * `openvpn_server_home`: Directory in which to place configuration files
 Default: /etc/openvpn
